@@ -1,0 +1,1697 @@
+//How to start a project
+1) Understand problem //Job shadowing. A system analyst´s job. Would ask why you need to build it..
+
+2)Plan Logic // Pseudocode, story board, flowchart
+
+3)Write code 
+
+4)Translate Code //compiler
+
+5)Test //syntax/Logic 6)Implement 7)Maintain //updates
+#include <iostream>					//Sorting program as a function. Time..???
+#include <cstdlib>
+#include <ctime>
+using namespace std;
+
+void insertionSort (int thisBigArray);
+int main() {
+    int thisBigArray;
+    cout << "How many arrays would you like?: "; cin >> thisBigArray;
+    insertionSort (thisBigArray);
+}
+
+void insertionSort(int thisBigArray){
+    int array[thisBigArray];
+    srand(time( NULL));
+    for (int i = 0; i < thisBigArray; i++){
+        array[ i ] = rand() % 100;
+    }
+ //print Original array
+    cout << "Original Array: ";
+    cout << "{";
+    for (int i = 0; i < thisBigArray; i++){
+        if (i != 0 ) {
+            cout <<", ";
+        }
+        cout << array[ i ];
+    }
+    cout << "}"<< '\n';
+
+    for (int i = 0; i < thisBigArray; i++ ){
+    int index_of_smallest_value = i;
+        //finding the smallest index
+        // Array    size   i
+        for (int j = i + 1; j < thisBigArray; j++){
+            if ( array[ j ] < array[ index_of_smallest_value ]){
+                index_of_smallest_value = j;            //// it keeps switching till it gets the smallest one!
+            }
+        }
+        //array, i, smallest index
+        int temp = array [ i ];
+        array[ i ] = array[ index_of_smallest_value ];
+        array[index_of_smallest_value] = temp;
+    }
+  //print Sorted array
+    cout << "Sorted Array: ";
+    cout << "{";
+    for (int k = 0; k < thisBigArray; k++){
+        if (k != 0 ) {
+            cout <<", ";
+        }
+        cout << array[ k ];
+    }
+    cout << "}"<< '\n';
+}
+-------------------------------
+#include <iostream>     //SLOT MACHINE
+#include <ctime>
+#include <cstdlib>
+#include <windows.h>
+using namespace std;
+
+void slotMachine(); void slot1(); void slot2(); void slot3();
+int RandGenerator();
+int ChangeMachine(float coin);
+int SLOT1, SLOT2, SLOT3; // Global variables.. Can i change this? For recording the slot results and using it in scoring.
+int score();
+float coin, coin2;
+
+int main(){
+    srand(time(NULL));
+
+    cout << "\n\n\t\t\tWelcome player!!\n \t\tHow fares your luck today? \n";
+    slotMachine();
+    Sleep(1000);
+    cout << "\t\tInsert coin & press Enter: " ; cin >> coin ;
+    cout << "Crank goes the machine!\n";
+
+        for (int x = 0; x < ChangeMachine(coin); ++ x){
+        Sleep(500);
+        slotMachine();
+        score();
+
+        cout << "Crank it!? \n";
+        cin.get();
+        }
+
+
+
+}
+
+int RandGenerator(){
+    int high=5, low=1 ;
+    int number = rand() % ( high - low ) + low;
+    return number ;
+}
+
+void slotMachine(){
+    cout    << "\t______________________________________________\n"
+            << "\t*                                             *\n"
+            << "\t---- ( ";slot1();
+    cout    << "  )----( ";slot2();
+    cout    << "  )----( ";slot3();
+    cout    << "  )----\n"
+            << "\t*                                             *\n"
+            << "\t______________________________________________\n\n";
+}
+void slot1(){
+    SLOT1 = RandGenerator();
+    switch (SLOT1){
+        case 1: cout  <<  "Cherry";  break;
+        case 2: cout  <<  "Leaf";  break;
+        case 3: cout  <<  "Gun";  break;
+        case 4: cout  <<  "Star";  break;
+    }
+
+}
+void slot2(){
+        SLOT2 = RandGenerator();
+    switch (SLOT2){
+        case 1: cout  <<  "Cherry";  break;
+        case 2: cout  <<  "Leaf";  break;
+        case 3: cout  <<  "Gun";  break;
+        case 4: cout  <<  "Star";  break;
+    }
+
+}
+void slot3(){
+        SLOT3 = RandGenerator();
+    switch (SLOT3){
+        case 1: cout  <<  "Cherry";  break;
+        case 2: cout  <<  "Leaf";  break;
+        case 3: cout  <<  "Gun";  break;
+        case 4: cout  <<  "Star";  break;
+    }
+}
+
+int ChangeMachine(float coin){
+    //MADE A MISTAKE HERE by declaring float again, apparently it's not needed. ie float that goes in the argument
+    float check ;
+    int ReturnChange; int Div50 = 0, Div25= 0, Div5= 0, Div1= 0; // div to convert the factor of minus-ing to do from float to int
+    int trigger = 1;    //trigger for switch function
+    int c50 = 50 ;int c25 = 25 ;int c5 = 5 ;int c1 = 1 ;
+
+//    cout << "Amount to return: " ; //you get change ex 0.35
+//    cin >>  coin;
+    check = coin * 100 + 0.5  ;      // I'm having a problem where the decimal i type gets rounded down. 0.76 becomes 75. // solution from the inter-webs; add 0.5..
+    ReturnChange = check;              // Not sure if using int (ReturnChange) to float(check) indirectly solves the problem..
+//    cout << ReturnChange << '\n';
+    switch (trigger){
+    case 1:
+        while (ReturnChange >= c50 && ReturnChange >= 1){
+            Div50 = ReturnChange / c50;
+            for ( int x = Div50; x > 0; --x){
+                ReturnChange -= c50 ;
+//                remainingCoin = ReturnChange;       //to catch the remaining coins apart from 50c
+            }
+        }
+    case 2:
+        while (ReturnChange >= c25 && ReturnChange >= 1){
+
+            Div25 = ReturnChange / c25 ;
+            for (int x = Div25; x > 0; --x){
+                ReturnChange -= c25;
+            }
+        }
+    case 3:
+        while (ReturnChange >= c5 && ReturnChange >= 1){
+            Div5 = ReturnChange / c5 ;
+            for (int x = Div5; x > 0; --x){
+                ReturnChange -= c5;
+            }
+        }
+    case 4:
+        while (ReturnChange >= c1 && ReturnChange >= 1){
+            Div1 = ReturnChange / c1 ;
+            for (int x = Div1; x > 0; --x){
+                ReturnChange -= c1;
+            }
+        }
+        break;
+    default :
+        cout << "Error y'all";
+    }
+    return Div50 ;      // 0.5 cent gets you one game.
+//    cout << "25c x "<<Div25 << ", 10c x " << Div10 << ", 5c x " << Div5 << ", 1c x " << Div1 ;
+}
+
+int score(){
+    int points = 0;
+    if (SLOT1 == (1||4) && SLOT2 == (1||4) && SLOT3 == (1||4)){
+        points += 3;
+        cout << " Plus 3 point!\n";
+    }
+    else if ( (SLOT1 == (2||4) ) && (SLOT2 == (2||4) ) && (SLOT3 == (2||4) ) ){
+        points += 1;
+        cout << " Plus 1 point!\n";
+    }
+    else if ( (SLOT1 == (3||4) ) && (SLOT2 == (3||4) ) && (SLOT3 == (3||4) ) ){
+        points += 2;
+        cout << " Plus 2 point!\n";
+    }
+    else if ( (SLOT1 == 4) && (SLOT2 == (4||1||2||3)) && (SLOT3 == 4) ){
+        points += 5;
+        cout << " Plus 5 point!\n";
+    }
+
+      // how tot add remaining coins to the for loop without breaking?
+}/*
+coin trouble
+Figured out that coin is what needs to be added/ done things to.
+How can I make it count down and the point system be reliable?
+Problem- Rand function was generating numbers between 1-3
+I'm getting more prints on the slotmachine than needed.
+			
+			INCOMPLETE
+*/
+------------------------------
+#include <iostream> // CHANGE MACHINE!  
+#include <ctime>
+#include <cstdlib>
+#include <windows.h>
+using namespace std;
+
+int main(){
+
+    float check ;
+    int ReturnChange;
+    int Div25 = 0, Div10= 0, Div5= 0, Div1= 0; // div to convert the factor of minus-ing to do from float to int
+    int xChange = 1;
+    float xxChange ;
+    int c25 = 25 ;
+    int c10 = 10 ;
+    int c5 = 5 ;
+    int c1 = 1 ;
+
+    cout << "Amount to return: " ; //you get change ex 0.35
+    cin >>  xxChange;
+    check = xxChange * 100 + 0.5  ;      // I'm having a problem where the decimal i type gets rounded down. 0.76 becomes 75
+    ReturnChange = check;                // solution from the interwebs; add 0.5..
+    cout << ReturnChange << '\n';
+    switch (xChange)
+    {
+    case 1:
+        while (ReturnChange >= c25 && ReturnChange >= 1){
+            Div25 = ReturnChange / c25;
+            for ( int x = Div25; x > 0; --x){
+                ReturnChange -= c25 ;
+            }
+        }
+    case 2:
+        while (ReturnChange >= c10 && ReturnChange >= 1){
+            Div10 = ReturnChange / c10 ;
+            for (int x = Div10; x > 0; --x){
+                ReturnChange -= c10;
+            }
+        }
+    case 3:
+        while (ReturnChange >= c5 && ReturnChange >= 1){
+            Div5 = ReturnChange / c5 ;
+            for (int x = Div5; x > 0; --x){
+                ReturnChange -= c5;
+            }
+        }
+    case 4:
+        while (ReturnChange >= c1 && ReturnChange >= 1){
+            Div1 = ReturnChange / c1 ;
+            for (int x = Div1; x > 0; --x){
+                ReturnChange -= c1;
+            }
+        }
+        break;
+    default :
+        cout << "Error y'all";
+    }
+    cout << "25c x "<<Div25 << ", 10c x " << Div10 << ", 5c x " << Div5 << ", 1c x " << Div1 ;
+
+/***
+*Problems. getting value from float to int. Had to add 0.5 (ps i changed from 1/100th to 1 place.)
+***/
+}
+------------------------------------------------------------
+#include <iostream>         //PROGRAM GUESSES YOUR NUMBER with random generator! pg 108?
+#include <ctime>
+#include <cstdlib>
+#include <windows.h>
+using namespace std;
+
+
+int main()
+{
+
+    srand(time(NULL));          // need this, type it just once.
+    int low, high, C_GUESS;     //C_guess is the computers guess, low and high is the range of the guesses
+    char userInput;
+
+    cout << "You pick a number and i'll guess!" << '\n' ; Sleep(1000);
+    cout << "Type 'l' for lower, 'h' for higher and 'c' for correct!\n\n" ;
+    Sleep(3000);
+
+    cout << "Pick a number between.. "; cin >> low ;
+    cout << "To.. " ; cin >> high ;
+    Sleep(1000);
+
+    while (userInput != 'c')
+    {
+
+        cout << "Between " << low << " and " << high << " you say. \nIs it.. " ;
+        //http://www.cplusplus.com/forum/beginner/85134/
+         ;
+        C_GUESS = rand() % (high - low) + low;
+        Sleep(1000);
+        cout << C_GUESS << "?\n";
+        cin >> userInput ;
+
+        switch(userInput)
+        {
+            case 'c' :  cout << "\nYay! \n\n" << "Game over"; return 0 ;
+            case 'h' :  low = C_GUESS; break;       //changes the range so C_GUESS becomes the new low
+            case 'l' :  high = C_GUESS; break;
+        }
+    }
+}
+----------------------------------------------------------------
+
+#include <iostream>         //GUESSING GAME
+#include <ctime>
+#include <cstdlib>
+using namespace std;
+//int randRange(int low, int high)
+//{
+//    int rand_result = rand();
+//    rand() % (high - low) + low;
+//}
+int main()
+{
+    int low, high, userInput ;  //variables for the user to set the range for guessing
+    int close = 6; int Nclose = -6; int switchCase ;   // variables for hinting if the number is lower or higher
+    srand(time(NULL));      // just needed to be called once.. Maybe Google this
+
+    cout << "Welcome to the Guessing Game." << '\n' << '\n' ;
+    cout << "Choose a range. For example: From 1 to 100." << '\n';
+    cout << "From: "; cin >> low ;
+    cout << "To: "; cin >> high ;
+
+    int guess_number = rand() % high + low;     // rand() magically works, GOOGLE
+    cout << "I've chosen a number. Can you guess what it is?" << '\n';
+
+    while (userInput != guess_number)
+    {
+        cout << "Guess: "; cin >> userInput ;
+        switchCase = userInput - guess_number ;
+       // cout << guess_number << " " <<switchCase ;
+       if (userInput == guess_number)
+            {break;}
+        else if ( switchCase <= close && switchCase > 0)
+            {cout << "You are really close! It's slightly less" << '\n' ;}
+        else if (switchCase >= Nclose && switchCase < 0)
+            {cout << "You are really close! It's slightly higher" << '\n';}
+        else if ( switchCase >= close && switchCase < 32768)           // rand() can only generate up to 32767
+            {cout << "Go lower!" << '\n';}
+        else if ( switchCase <= Nclose && switchCase > -32768)
+            {cout << "Go higher!" << '\n' ;}
+        else {cout << "Something went wrong";}
+    }
+    cout << "You've won! That's the number " << guess_number ;
+
+    // add functions
+    // use switch case
+    //limit user input!!!!!!!!!!!!!
+}
+--------------------------------------
+#include <iostream>         //COIN FLIP!
+#include <ctime>
+#include <cstdlib>
+using namespace std;
+
+//int randRange (int low, int high);
+int randRange(int low, int high)
+{
+    return rand() % (high - low) + low;
+}
+
+
+int main()
+{
+    srand(time(NULL));
+    for (int i = 0; i < 10; ++i)
+    {
+        cout << randRange(0,2) << '\n';
+    }
+}
+----------------------------------
+
+#include <iostream>				//TICTACTO
+#include <string>
+using namespace std;
+//function on all the squares on the board
+void Square1(); void Square2(); void Square3(); void Square4(); void Square5(); void Square6(); void Square7(); void Square8(); void Square9();
+void ticTacToeBoard();   // Function of the board to print with all the squares updating itself on every time it is called.
+void player_X();    //Player X's actions
+void player_O();    //Player O's actions
+void players_inputO (); // functions for limiting what players type ie between 1-9 (integers)
+void players_inputX ();
+int playerX, playerO; // player one and two's input
+bool gameOver = false ;
+//bool gameDraw = false ;
+bool gameWon();
+enum BOARD {blank, ttt_x, ttt_o}; //declaring enum; A square in on the board can only be blank, X or O
+
+//there are nine sq(squares) in a tic-tac-toe board, assigning all them to blank as default.
+BOARD sq1 = blank ;
+BOARD sq2 = blank ;
+BOARD sq3 = blank ;
+BOARD sq4 = blank ;
+BOARD sq5 = blank ;
+BOARD sq6 = blank ;
+BOARD sq7 = blank ;
+BOARD sq8 = blank ;
+BOARD sq9 = blank ;
+
+int main()
+{
+    cout << "\t  Tic Tac Toe";
+    ticTacToeBoard();
+    for ( int x = 9; x >= 1 ; x--)
+    {
+        player_X();
+            if (gameOver == true)
+            {
+                cout << " \n Game over! \n !!!*****Congrats player X*****!!!" ;
+                return 0;
+            }
+
+        player_O();
+            if (gameOver == true)
+            {
+                cout << " \n Game over! \n !!!****Congrats player O*****!!!" ;
+                return 0;
+            }
+    }
+
+}
+
+
+
+//prints the board with updating squares(functions)
+void ticTacToeBoard()
+{
+    //board
+    cout << '\n'<< '\n';
+    cout << "\t" ; Square1(); cout << " | " ; Square2(); cout << " | " ; Square3(); cout << endl ;
+    cout << "\t" <<" ------------- " << endl;
+    cout << "\t" ; Square4(); cout << " | " ; Square5(); cout << " | " ; Square6(); cout << endl ;
+    cout << "\t" <<" ------------- " << endl;
+    cout << "\t" ; Square7(); cout << " | " ; Square8(); cout << " | " ; Square9(); cout << endl ;
+    cout << '\n'<< '\n';
+
+    int start = 1;
+    switch(start)
+    {
+        case 1: if ( ( ttt_o == sq1 && ttt_o == sq2 && ttt_o == sq3 ) || ( ttt_x == sq1 && ttt_x == sq2 && ttt_x == sq3 ) )
+                {
+                    gameOver = true ;
+                }
+        case 2: if ( ( ttt_o == sq4 && ttt_o == sq5 && ttt_o == sq6 ) || ( ttt_x == sq4 && ttt_x == sq5 && ttt_x == sq6 ) )
+                {
+                    gameOver = true ;
+                }
+        case 3: if ( ( ttt_o == sq7 && ttt_o == sq8 && ttt_o == sq9 ) || ( ttt_x == sq7 && ttt_x == sq8 && ttt_x == sq9 ) )
+                {
+                    gameOver = true ;
+                }
+        case 4: if ( ( ttt_o == sq1 && ttt_o == sq4 && ttt_o == sq7 ) || ( ttt_x == sq1 && ttt_x == sq4 && ttt_x == sq7 ) )
+                {
+                    gameOver = true ;
+                }
+        case 5: if ( ( ttt_o == sq2 && ttt_o == sq5 && ttt_o == sq8 ) || ( ttt_x == sq2 && ttt_x == sq5 && ttt_x == sq8 ) )
+                {
+                    gameOver = true ;
+                }
+        case 6: if ( ( ttt_o == sq3 && ttt_o == sq6 && ttt_o == sq9 ) || ( ttt_x == sq3 && ttt_x == sq6 && ttt_x == sq9 ) )
+                {
+                    gameOver = true ;
+                }
+        case 7: if ( ( ttt_o == sq7 && ttt_o == sq5 && ttt_o == sq3 ) || ( ttt_x == sq7 && ttt_x == sq5 && ttt_x == sq3 ) )
+                {
+                    gameOver = true ;
+                }
+        case 8: if ( ( ttt_o == sq1 && ttt_o == sq5 && ttt_o == sq9 ) || ( ttt_x == sq1 && ttt_x == sq5 && ttt_x == sq9 ) )
+                {
+                    gameOver = true ;
+                }
+//        case 9: if ( ttt_o || ttt_x == (sq1 && sq2 && sq3 && sq4 && sq5 && sq6 && sq7 && sq8 && sq9))
+//                {
+//                    gameDraw = true ;
+//                }
+
+
+    }
+}
+
+//Functions for all 9 squares
+void Square1()
+{
+
+    if (sq1 == blank)
+        cout << " 1 ";
+    else if (sq1 == ttt_x)
+        cout << " X ";
+    else if (sq1 == ttt_o)
+        cout << " O " ;
+}
+
+void Square2()
+{
+
+    if (sq2 == blank)
+        cout << " 2 ";
+    else if (sq2 == ttt_x)
+        cout << " X ";
+    else if (sq2 == ttt_o)
+        cout << " O " ;
+}
+
+void Square3()
+{
+
+    if (sq3 == blank)
+        cout << " 3 ";
+    else if (sq3 == ttt_x)
+        cout << " X ";
+    else if (sq3 == ttt_o)
+        cout << " O " ;
+}
+
+void Square4()
+{
+
+    if (sq4 == blank)
+        cout << " 4 ";
+    else if (sq4 == ttt_x)
+        cout << " X ";
+    else if (sq4 == ttt_o)
+        cout << " O " ;
+}
+
+void Square5()
+{
+
+    if (sq5 == blank)
+        cout << " 5 ";
+    else if (sq5 == ttt_x)
+        cout << " X ";
+    else if (sq5 == ttt_o)
+        cout << " O " ;
+}
+
+void Square6()
+{
+
+    if (sq6 == blank)
+        cout << " 6 ";
+    else if (sq6 == ttt_x)
+        cout << " X ";
+    else if (sq6 == ttt_o)
+        cout << " O " ;
+}
+
+void Square7()
+{
+
+    if (sq7 == blank)
+        cout << " 7 ";
+    else if (sq7 == ttt_x)
+        cout << " X ";
+    else if (sq7 == ttt_o)
+        cout << " O " ;
+}
+
+void Square8()
+{
+
+    if (sq8 == blank)
+        cout << " 8 ";
+    else if (sq8 == ttt_x)
+        cout << " X ";
+    else if (sq8 == ttt_o)
+        cout << " O " ;
+}
+
+void Square9()
+{
+
+    if (sq9 == blank)
+        cout << " 9 ";
+    else if (sq9 == ttt_x)
+        cout << " X ";
+    else if (sq9 == ttt_o)
+        cout << " O " ;
+}
+
+//Player X controls when choosing square. And limiting them from overriding each others previous play.
+void player_X()
+{
+//bool input_check = false ;
+//    while (input_check == false)
+//    {
+//        cout << "\n Player(X) and just stick with numbers 1-9 : ";
+//        cin >> playerX ;
+//            if (!cin)
+//            {
+//                cin >> playerX ;
+//            }
+//            else{
+//                input_check = true ;
+//            }
+//    }
+
+        cout << "\n Player(X) ";
+        cin >> playerX ;
+int trigger_x = playerX ;
+    switch (trigger_x)
+    {
+        case 1: if (sq1 == blank)
+                {sq1 = ttt_x ; }
+                else
+                { cout << " Try again" ; player_X (); }
+                break ;
+        case 2: if (sq2 == blank)
+                {sq2 = ttt_x ; }
+                else
+                { cout << " Try again" ; player_X (); }
+                break ;
+        case 3: if (sq3 == blank)
+                {sq3 = ttt_x ; }
+                else
+                { cout << " Try again" ; player_X (); }
+                break ;
+        case 4: if (sq4 == blank)
+                {sq4 = ttt_x ; }
+                else
+                { cout << " Try again" ; player_X (); }
+                break ;
+        case 5: if (sq5 == blank)
+                {sq5 = ttt_x ; }
+                else
+                { cout << " Try again" ; player_X (); }
+                break ;
+        case 6: if (sq6 == blank)
+                {sq6 = ttt_x ; }
+                else
+                { cout << " Try again" ; player_X (); }
+                break ;
+        case 7: if (sq7 == blank)
+                {sq7 = ttt_x ; }
+                else
+                { cout << " Try again" ; player_X (); }
+                break ;
+        case 8: if (sq8 == blank)
+                {sq8 = ttt_x ; }
+                else
+                { cout << " Try again" ; player_X (); }
+                break ;
+        case 9: if (sq9 == blank)
+                {sq9 = ttt_x ; }
+                else
+                { cout << " Try again" ; player_X (); }
+                break ;
+        default: cout<< "err_x" ; break; //check for error
+    }
+    ticTacToeBoard();  // prints the board
+}
+
+void player_O()
+{
+//bool input_check = false ;                    //the commented out section is my attempt to limit users input.
+//    while (input_check == false)              // I wanted the player to only type integers between 1-9 so the
+//    {                                         // the game doesn't crash when they type a char or anything other than 1-9
+                                                 //I've put it on hold.
+//            if (playerO == 1 || 2 || 3 || 4 || 5 || 6 || 7 || 9 )
+//            {
+//                input_check = true ;
+//            }
+//            else{
+//                cout << "try again" ;
+//            }
+//    }
+		cout << "\n Player(O): ";
+        cin >> playerO ;
+int trigger_o = playerO ;
+    switch (trigger_o)
+    {
+        case 1: if (sq1 == blank)
+                {sq1 = ttt_o ; }
+                else
+                { cout << " Try again" ; player_O (); }
+                break ;
+        case 2: if (sq2 == blank)
+                {sq2 = ttt_o ; }
+                else
+                { cout << " Try again" ; player_O (); }
+                break ;
+        case 3:if (sq3 == blank)
+                {sq3 = ttt_o ; }
+                else
+                { cout << " Try again" ; player_O (); }
+                break ;
+        case 4: if (sq4 == blank)
+                {sq4 = ttt_o ; }
+                else
+                { cout << " Try again" ; player_O (); }
+                break ;
+        case 5: if (sq5 == blank)
+                {sq5 = ttt_o ; }
+                else
+                { cout << " Try again" ; player_O (); }
+                break ;
+        case 6: if (sq6 == blank)
+                {sq6 = ttt_o ; }
+                else
+                { cout << " Try again" ; player_O (); }
+                break ;
+        case 7: if (sq7 == blank)
+                {sq7 = ttt_o ; }
+                else
+                { cout << " Try again" ; player_O (); }
+                break ;
+        case 8:if (sq8 == blank)
+                {sq8 = ttt_o ; }
+                else
+                { cout << " Try again" ; player_O (); }
+                break ;
+        case 9: if (sq9 == blank)
+                {sq9 = ttt_o ; }
+                else
+                { cout << " Try again" ; player_O (); }
+                break ;
+        default: cout<< "err_o" ; break;
+    }
+    ticTacToeBoard();
+
+}
+
+
+// How to limit what the player types?
+//Better structure, smarter code, comments for unknown variables
+//ask Damir to help you learn reading syntax on programming language "semantics?"
+------------------------------------------------------
+//Menu program with functions but with switch statement instead.
+#include <iostream>
+#include <string>
+using namespace std;
+int day (int day);
+
+int main()
+{
+    for (int x = 1; x <= 12; x ++)
+    {
+        day(x);
+        cout << " day of Christmas, \nMy true love sent to me \n";
+        switch (x)
+        {
+            case 12: cout << "Twelve lords a leaping,\n" ;
+            case 11: cout << "Eleven ladies dancing, \n" ;
+            case 10: cout << "Ten pipers piping, \n" ;
+            case 9: cout << "Nine drummers drumming, \n" ;
+            case 8: cout << "Eight maids a milking, \n" ;
+            case 7: cout << "Seven swans a swimming, \n" ;
+            case 6: cout << "Six geese a laying, \n" ;
+            case 5: cout << "Five gold rings, \n" ;
+            case 4: cout << "Four colley birds, \n" ;
+            case 3: cout << "Three French hens, \n" ;
+            case 2: cout << "Two turtle doves, and\n" ;
+            case 1: cout << "A partridge in a pear tree. \n\n\n" ; break ;  // i needed a break here, otherwise i see "Christmas error"
+            default: cout << "Christmas error.."; break;    //do i need a break down here, in case of error?
+        }
+        
+    }
+}
+
+int day(int day)    //cycles through the numbers of the day in the song
+{
+        switch (day)
+        {
+            case 1: cout << "The first" ; break ;
+            case 2: cout << "The second" ; break ;
+            case 3: cout << "The third" ; break ;
+            case 4: cout << "The fourth" ; break ;
+            case 5: cout << "The fifth" ; break ;
+            case 6: cout << "The sixth" ; break ;
+            case 7: cout << "The seventh" ; break ;
+            case 8: cout << "The eighth" ; break ;
+            case 9: cout << "The ninth" ; break ;
+            case 10: cout << "The tenth" ; break ;
+            case 11: cout << "The eleventh" ; break ;
+            case 12: cout << "The twelfth" ; break ;
+        }
+
+}
+------------------------------
+//Program menu with SWITCH CASE    				args
+#include <iostream>
+#include <string>
+using namespace std;
+void bottles99();
+void calculator();
+int main()
+{
+    int input;
+
+       do{
+            cout << "Choose one the following from the menu." <<endl ;
+            cout << "0. Quit program." <<endl
+            << "1. Calculator Program." <<endl
+            << "2. Ballad of the bottles!!" <<endl;
+            cin >> input ;
+
+            switch (input)
+            {
+                case 0: cout << "Program exiting..." ; return 0;
+                case 1: cout << "Calculator.."; calculator(); break ;
+                case 2: cout << "Ballad of the bottles!!" ; bottles99(); break;
+			//	default: cout << "Error Syntax"; break;			// Removed this due to the loop breaking
+			
+            }
+        }while (input != 1 && input != 2 && input != 0);
+}
+---------------------
+
+//To find a pattern in data, to build an algorithm.
+//Implement the source code that turns numbers into English text.(Page 100).
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+int levelOne(int x);
+int levelTwo(int x);
+int levelThree(int x);
+
+int main()
+{
+    int user;
+    cout << "A number below 1120 : ";
+    cin >> user;
+    cout <<"You typed: "; levelThree(user);
+
+}
+
+int levelThree(int x){  //Functions are categorized in levels according to the number of words the numbers contain.
+                        //level three holds three words
+        if (x <= 1120 && x >= 1000){cout << "Thousand " ;x= x % 1000 ;}
+        else if (x <= 999 && x >=900){cout << "nine hundred ";    x= x % 900 ;}
+        else if (x <= 899 && x >=800){cout << "eight hundred ";   x= x % 800 ;}
+        else if (x <= 799 && x >=700){cout << "seven hundred ";   x= x % 700 ;}
+        else if (x <= 699 && x >=600){cout << "six hundred ";     x= x % 600 ;}
+        else if (x <= 599 && x >=500){cout << "five hundred " ;   x= x % 500 ;}
+        else if (x <= 499 && x >=400){cout << "four hundred ";    x= x % 400 ;}
+        else if (x <= 399 && x >=300){cout << "three hundred ";   x= x % 300 ;}
+        else if (x <= 299 && x >=200){cout << "two hundred ";     x= x % 200 ;}
+        else if (x <= 199 && x >=121){cout << "one hundred ";     x= x % 100 ;}
+
+        levelTwo(x);    //numbers gets filtered through the next level.
+}
+
+
+int levelTwo(int x){
+
+        if (x <=120 && x >=100){cout << "one hundred "; x= x % 100 ;}
+        else if (x <= 99 && x >= 90){cout << "ninety ";x= x % 90 ;}
+        else if (x <= 89 && x >= 80){cout << "eighty ";x= x % 80 ;}
+        else if (x <= 79 && x >= 70){cout << "seventy ";x= x % 70 ;}
+        else if (x <= 69 && x >= 60){cout << "sixty ";x= x % 60 ;}
+        else if (x <= 59 && x >= 50){cout << "fifty ";x= x % 50 ;}
+        else if (x <= 49 && x >= 40){cout << "forty ";x= x % 40 ;}
+        else if (x <= 39 && x >= 30){cout << "thirty ";x= x % 30 ;}
+        else if (x <= 29 && x >= 20){cout << "twenty ";x= x % 20 ;}
+
+        levelOne(x);
+}
+
+int levelOne(int x){
+
+        if ( x == 1){cout << "one" ;}
+        else if ( x == 2){cout << "two";}
+        else if ( x == 3){cout << "three";}
+        else if ( x == 4){cout << "four";}
+        else if ( x == 5){cout << "five";}
+        else if ( x == 6){cout << "six";}
+        else if ( x == 7){cout << "seven";}
+        else if ( x == 8){cout << "eight";}
+        else if ( x == 9){cout << "nine";}
+        else if ( x == 10){cout << "ten";}
+        else if ( x == 11){cout << "eleven";}
+        else if ( x == 12){cout << "twelve";}
+        else if ( x == 13){cout << "thirteen";}
+        else if ( x == 14){cout << "fourteen";}
+        else if ( x == 15){cout << "fifteen";}
+        else if ( x == 16){cout << "sixteen";}
+        else if ( x == 17){cout << "seventeen";}
+        else if ( x == 18){cout << "eighteen";}
+        else if ( x == 19){cout << "nineteen";}
+        else {cout << " " ;}
+}
+-------------------
+// Make your calculator program perform computations in a separate function for each type of computation.
+#include <iostream>
+#include <string>
+using namespace std;
+
+//funtion prototype
+int add (int arg1, int arg2);
+int multi (int arg1, int arg2);
+int sub (int arg1, int arg2);
+int div (int arg1, int arg2);
+int mod (int arg1, int arg2);
+
+int main()
+{
+    int arg1, arg2;
+    string userInput ;
+    string intro ;
+
+    cout << "Hello, type the calculation method you want to use (operator: +, -, *, % or /), or type 0 to quit: ";
+    getline(cin, userInput, '\n'); // !!It works for string but not int
+    if (userInput == "0"){
+        cout << "Program closing.." ;
+        return 0;}
+
+    cout << "Type the first value: ";
+    cin >> arg1, '\n' ;
+    cout << "Type the second value: ";
+    cin >>arg2, '\n' ;
+
+
+    if (userInput == "+"){
+        cout << "\n\n" << "Addition: " ;
+        cout <<arg1<<" "<<userInput<<" "<< arg2 <<" "<<"= " << add(arg1,arg2) ;
+    }
+    else if (userInput == "*"){
+        cout << "\n\n" << "Multiplication: " ;
+        cout <<arg1<<" "<<userInput<<" "<< arg2 <<" "<<"= " << multi(arg1,arg2) ;
+    }
+    else if (userInput == "-"){
+        cout << "\n\n" << "subtraction: " ;
+        cout <<arg1<<" "<<userInput<<" "<< arg2 <<" "<<"= " << sub(arg1,arg2) ;
+    }
+    else if (userInput == "/"){
+        cout << "\n\n" << "Division: " ;
+        cout <<arg1<<" "<<userInput<<" "<< arg2 <<" "<<"= " << div(arg1,arg2) ;
+    }
+    else if (userInput == "%"){
+        cout << "\n\n" << "Modulo: " ;
+        cout <<arg1<<" "<<userInput<<" "<< arg2 <<" "<<"= " << mod(arg1,arg2) ;
+    }
+}
+int add (int arg1, int arg2){
+    int result = arg1 + arg2 ;
+    return result ;
+}
+int multi(int arg1, int arg2){
+    int result = arg1 * arg2 ;
+    return result ;
+}
+int sub (int arg1, int arg2){
+    int result = arg1 - arg2 ;
+    return result ;
+}
+int div (int arg1, int arg2){
+    int result = arg1 / arg2 ;
+    return result ;
+}
+int mod (int arg1, int arg2){
+    int result = arg1 % arg2 ;
+    return result ;
+}
+---------------------------------------------------
+//Survey which tallys and shows as graph
+#include <iostream>
+#include <string>
+using namespace std;
+int main()
+{
+    int m, option1, option2, option3 ;
+    option1 = 0; option2 = 0; option3 = 0;
+    string answer ;
+    cout << "Name the number of participants: ";
+    cin >> m;
+    for (int i = m ; i > 0 ; i--)
+    {
+        cout << "Choose Kiras best side! \n" ;
+        cout << "1. smile \n" << "2. cheeky-ness \n" << "3. His butt \n" ;
+        cin >> answer ;
+        if (answer == "1")
+        {
+            option1 = option1 + 1 ;
+        }
+        if (answer == "2")
+        {
+            option2 += 1 ;
+        }
+        if (answer == "3")
+        {
+            option3++ ;
+        }
+        if (answer == "0")
+        {
+            return 0;
+        }
+    }
+    cout << "\n\n The end results" << "\n" ;
+    cout << " \n \n Option 1" ;
+    for (int i = option1; i>0 ; --i)
+    {
+        cout << " | " ;
+    }
+    cout << "\n Option 2" ;
+    for (int i = option2; i > 0 ; --i)
+    {
+        cout << " | " ;
+    }
+    cout << " \n Option 3" ;
+    for (int i = option3; i > 0 ; --i)
+    {
+        cout << " | " ;
+    }
+	cout << "\n 1) " <<option1 << "\t 2) "<<option2<<"\t 3) "<<option3 ;
+}
+        ----------------------------------------------------------------------------
+//Menu program with FUNCTIONSSSS
+//Take the "menu program" you wrote earlier and break it out into a series of calls to functions for each of the menu items.
+//Add the calculator and "100 bottles of beer" as two different functions that can be called.
+#include <iostream>
+#include <string>
+using namespace std;
+
+//function prototype
+void menu1();
+void menu2() ;
+void menu3() ;
+void bottles99() ;
+void calc() ;
+
+int main()
+{
+    string  user;
+
+    do
+    {
+        cout << "Please choose one of the following with 1, 2 or 3 \n" ;
+         menu1(); menu2() ; menu3() ;
+//        << '\n' << menu4 << '\n' << menu5 << '\n';
+        cin >> user ;
+        if (user == "1")
+        {
+            cout << "You've called the ballad of 99 BOTTLES!! So here you go \n" ;
+            bottles99() ;
+        }
+        else if (user == "2")
+        {
+            cout << "You've chosen the calculator function! \n" ;
+            calc() ;
+        }
+    }while ( user != "1" && user != "2" && user != "3");
+}
+----------------------------------------
+//
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main ()
+{
+    string user_first_name, user_last_name ;
+
+    cout << "Please enter your first name: ";
+    cin >> user_first_name ;
+    cout << "Please enter your last name: ";
+    cin >> user_last_name ;
+    string user_full_name = user_first_name + " " + user_last_name;
+
+    cout << "Your name is: " << user_full_name << "\n";
+
+}----------------------------------
+//              functions
+//Menu function
+void menu1(){
+    cout << "THis is menu one" << endl;
+}
+void menu2() {
+    cout <<"This is menu two" << endl;}
+void menu3() {
+    cout << "This is menu three" << endl ;}
+
+//99 bottles
+void bottles99(){
+    int bottles = 99 ;
+    string lyricA, lyricB, lyricC, lyricD ;
+    lyricA = " bottles of beer on the wall, " ;
+    lyricB = " bottles of beer. \n" ;
+    lyricC = "Take one down and pass it around, " ;
+    lyricD = " bottles of beer on the wall.\n" ;
+
+    while ( bottles > 1)
+    {
+        cout << bottles << lyricA <<bottles << lyricB ;
+        bottles-- ;
+        cout << lyricC << bottles <<lyricD ;
+    }
+    if (bottles == 1)
+    {
+        cout << bottles << lyricA <<bottles << lyricB << lyricC << "no more bottles of beer on the wall. \n"
+        << "No more bottles of beer on the wall, no more bottles of beer. \n"
+        <<"Go to the store and buy some more, 99 bottles of beer on the wall." ;
+        //return 0 ;
+    }//0.186 s
+}
+
+// calculator "Calculator"
+void calc()
+{
+    string userInput ;
+    int arg1, arg2 ;
+
+    cout << "Hello, type the calculation method you want to use (operator: +, -, *, % or divide), or type 0 to quit:" << "\n";
+    cin >> userInput ;
+
+    if (userInput == "0") {
+//        return 0 ;
+    }
+    else{
+        cout << "Choose your first argument (number): \n" ;
+        cin >> arg1 ;
+        cout << "Choose your second argument (number: \n" ;
+        cin >> arg2 ;
+        }
+    if (userInput == "+")
+    {
+        cout <<arg1 << userInput << arg2 << " = " << (arg1 + arg2) ;
+    }
+    else if ( userInput == "-")
+    {
+        cout <<arg1 << userInput << arg2 << " = " << (arg1 - arg2) ;
+    }
+    else if ( userInput == "*")
+    {
+        cout <<arg1 << userInput << arg2 << " = " << (arg1 * arg2) ;
+    }
+    else if ( userInput == "/")
+    {
+        cout <<arg1 << userInput << arg2 << " = " << (arg1 / arg2) ;
+    }
+    else if ( userInput == "%")
+    {
+        cout <<arg1 << userInput << arg2 << " = " << (arg1 % arg2) ;
+    }
+}
+-------------------------------------------------------------------------------------
+        Practice problem 4. 5 max attempts on password.
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main()
+{
+    string account, password ;
+
+    cout << "Say the magic word! \n" ;
+    cout << "You have 5 chances :D \n" ;
+        if (password != "joeisthebest" )
+    {
+        for( int i = 1; i <= 5 ; i++ )
+        {
+            cout << "Try " << i <<"!\n" << "Password: " ;
+            cin >> password ;
+            if (i == 5)
+        {
+            cout << "You are doomed!";
+        }
+        }
+
+    }
+    else{
+        cout << "Good job!";
+    }
+
+}-----------------------------------------
+//Practice problem 3 Program that terminates if input is 0
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+int main()
+{
+    int a;
+    while (a != 0)
+   {
+       cout << "Give us numbers!!" ;
+       cin >> a ;
+       cout << a * a ;
+   }
+   return 0;
+
+}
+-----------------------------------
+//99 bottles of beer
+
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+int main()
+{
+    int bottles = 99 ;
+    string lyricA, lyricB, lyricC, lyricD ;
+    lyricA = " bottles of beer on the wall, " ;
+    lyricB = " bottles of beer. \n" ;
+    lyricC = "Take one down and pass it around, " ;
+    lyricD = " bottles of beer on the wall.\n" ;
+
+    do {
+        cout << bottles << lyricA <<bottles << lyricB ;
+        bottles-- ;
+        cout << lyricC << bottles <<lyricD ;
+
+    }while (bottles != 1) ;
+    if (bottles == 1){
+        cout << bottles << lyricA <<bottles << lyricB << lyricC << "no more bottles of beer on the wall. \n"
+        << "No more bottles of beer on the wall, no more bottles of beer. \n"
+        <<"Go to the store and buy some more, 99 bottles of beer on the wall." ;
+        return 0 ;
+    } //0.213 s
+}
+   int bottles = 99 ;
+    string lyricA, lyricB, lyricC, lyricD ;
+    lyricA = " bottles of beer on the wall, " ;
+    lyricB = " bottles of beer. \n" ;
+    lyricC = "Take one down and pass it around, " ;
+    lyricD = " bottles of beer on the wall.\n" ;
+
+    do {
+        cout << bottles << lyricA <<bottles << lyricB ;
+        bottles-- ;
+        cout << lyricC << bottles <<lyricD ;
+
+    }while (bottles != 1) ;
+    if (bottles == 1){
+        cout << bottles << lyricA <<bottles << lyricB << lyricC << "no more bottles of beer on the wall. \n"
+        << "No more bottles of beer on the wall, no more bottles of beer. \n"
+        <<"Go to the store and buy some more, 99 bottles of beer on the wall." ;
+        return 0 ;
+    } //0.220 s
+}
+string lyricA, lyricB, lyricC, lyricD ;
+    lyricA = " bottles of beer on the wall, " ;
+    lyricB = " bottles of beer. \n" ;
+    lyricC = "Take one down and pass it around, " ;
+    lyricD = " bottles of beer on the wall.\n" ;
+
+    for (int i = 99; i > 0; i--)
+    {
+        cout << i << lyricA << i << lyricB << lyricC << i - 1 << lyricD << endl;
+        while (i == 2)
+        {
+            cout << i - 1 << lyricA <<i - 1 << lyricB << lyricC << "no more bottles of beer on the wall. \n"
+            << "No more bottles of beer on the wall, no more bottles of beer. \n"
+            <<"Go to the store and buy some more, 99 bottles of beer on the wall." ;
+            break ;
+        }// 0.232 s
+    }
+{
+    int bottles = 99 ;
+    string lyricA, lyricB, lyricC, lyricD ;
+    lyricA = " bottles of beer on the wall, " ;
+    lyricB = " bottles of beer. \n" ;
+    lyricC = "Take one down and pass it around, " ;
+    lyricD = " bottles of beer on the wall.\n" ;
+
+    while ( bottles > 1)
+    {
+        cout << bottles << lyricA <<bottles << lyricB ;
+        bottles-- ;
+        cout << lyricC << bottles <<lyricD ;
+    }
+    if (bottles == 1)
+    {
+        cout << bottles << lyricA <<bottles << lyricB << lyricC << "no more bottles of beer on the wall. \n"
+        << "No more bottles of beer on the wall, no more bottles of beer. \n"
+        <<"Go to the store and buy some more, 99 bottles of beer on the wall." ;
+        return 0 ;
+    }//0.221
+}
+-------------------------------------------------------------------------------
+//Menu program
+int main()
+{
+    string menu1, menu2, menu3, menu4, menu5, user;
+    menu1 = "one" ;
+    menu2 = "two" ;
+    menu3 = "three" ;
+    menu4 = "four" ;
+    menu5 = "five" ;
+
+    do
+    {
+        cout << "Please choose one of the following \n" ;
+        cout<< menu1 << '\n' << menu2 << '\n' << menu3 << '\n' << menu4 << '\n' << menu5 << '\n';
+        cin >> user ;
+    }while (user != "one" && user != "two" && user != "three" && user != "four" && user != "five") ;
+}-----------------------------
+int main()
+{
+
+    string account, password ;
+    string account1, account1password ;
+    string account2, account2password ;
+    string account3, account3password ;
+
+    cout << "Enter your 1st account name: \n" ;
+    cin >> account1 ;
+    cout << "Enter password: \n" ;
+    cin >> account1password ;
+
+    cout << "Enter user 2nd account name: \n" ;
+    cin >> account2 ;
+    cout << "Enter password: \n" ;
+    cin >> account2password ;
+
+    do
+   {
+       cout << "Please enter your Account-Name: ";
+       cin >> account ;
+   }while (account != account1 && account != account2) ;
+
+   if (account == account1) {
+    do
+   {
+       cout << "Password: " ;
+       cin >> password ;
+    }while (password != account1password) ;
+    cout << "Welcome, " << account1 ;
+    }
+
+    else if (account == account2) {
+    do
+    {
+        cout << "Password: ";
+        cin >> password;
+    }while (password != account2password) ;  //it's easy to forget to add the semicolon after the while loop but for the other loops, you shouldn't!
+    cout << "Welcome, " << account2 ;
+    }
+    else{
+        cout << "something went wrong" ;
+    }
+
+}
+--------------------------------------------------------------
+//take a operator from user +, -, / or *
+//take two arguments ie numbers and show the result
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main()
+{
+    string userInput ;
+    int arg1, arg2 ;
+
+    cout << "Hello, type the calculation method you want to use (operator: +, -, *, % or divide), or type 0 to quit:" << "\n";
+    cin >> userInput ;
+
+    if (userInput == "0") {
+        return 0 ;
+    }
+    else{
+        cout << "Choose your first argument (number): \n" ;
+        cin >> arg1 ;
+        cout << "Choose your second argument (number: \n" ;
+        cin >> arg2 ;
+        }
+    if (userInput == "+")
+    {
+        cout <<arg1 << userInput << arg2 << " = " << (arg1 + arg2) ;
+    }
+    else if ( userInput == "-")
+    {
+        cout <<arg1 << userInput << arg2 << " = " << (arg1 - arg2) ;
+    }
+    else if ( userInput == "*")
+    {
+        cout <<arg1 << userInput << arg2 << " = " << (arg1 * arg2) ;
+    }
+    else if ( userInput == "/")
+    {
+        cout <<arg1 << userInput << arg2 << " = " << (arg1 / arg2) ;
+    }
+    else if ( userInput == "%")
+    {
+        cout <<arg1 << userInput << arg2 << " = " << (arg1 % arg2) ;
+    }
+}----------------------------------------------------
+//CS50 task
+
+//just one decimal place
+//F = ((C * 9) / 5) + 32
+
+#include <iostream>
+#include <stdio.h>
+using namespace std;
+
+int main()  //the problem i had is that i used the formula before getting the input, which i think made the program run from top to bottom without ever using it with the input..
+{           // so the order is important.
+    float celsius;
+    float fahrenheit;
+
+    cout << "Please type the celsius you want to convert: " ;
+    cin >> celsius ;
+
+    fahrenheit = (((celsius * 9) / 5) + 32) ;
+    cout << fahrenheit ;
+    //printf("%.1lf", fahrenheit);
+    return 0;
+}
+
+----------------------------------------------------------
+take password
+make it so that either of two numbers are valid?
+but use only one if statement to do the check
+#include <iostream> //With to user input(age) check who is older, and diff response if they are older than 100
+#include <string> // The order of execution is important. As soon as one of the ifs or else if statements become true, your program jumps out of track and doesn't go throw each one..
+using namespace std;
+
+//Expand the password checking program from earlier in this chapter and make it take multiple usernames,
+//each with their own password, and ensure that the right username is used for the right password.
+//Provide the ability to prompt user's again if the first login attempt failed. Think about how easy
+//(or hard) it is to do this for a lot of usernames and passwords.(Page 73).
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main()
+{
+    string account, password ;
+    string account1, account1password ;
+//    string account2 ;
+//    int account2password ;
+//    string account3 ;
+//    int account3password ;
+
+    cout << "Enter user name: \n" ;
+    cin >> account1 ;
+    cout << "Enter password: \n" ;
+    cin >> account1password ;
+
+    cout << "Please log in. Username; \n" ;
+    cin >> account ;
+    if ( account == account1 )
+    {
+        cout << "Password: \n" ;
+        cin >> password ;
+        if ( password == account1password )
+        {
+            cout << "Welcome " << account1 ;
+        }
+              while (password != account1password){
+                cout << "Wrong password \n" ;
+                cout << account1 <<" Password: " ;
+                cin >> password ;
+			}
+    }
+
+}
+
+-----------------------------------------------------------------------
+#include <iostream> //With to user input(age) check who is older, and diff response if they are older than 100
+#include <string>
+using namespace std;
+
+int main()
+{
+    int person1;
+    int person2;
+
+    cout << "person one, enter your age: ";
+    cin >> person1 ;
+    cout << "person two, enter your age: ";
+    cin >> person2 ;
+
+    if ( person1 > 100 && person2 > 100 )
+    {
+        cout << "Both are of old age" << "\n";
+    }
+    else if ( person1 > person2 )
+    {
+        cout << "person 1 is older" <<"\n";
+    }
+    else if ( person1 < person2 )
+    {
+        cout << "person2 is older \n";
+    }
+    else
+    {
+        cout << "Both are of similar age" ;
+    }
+    return 0;
+}
+- - -  --  --  --  --  --  --  --  --  --  --  -- --
+else if ( person1 == person2 )
+    {
+        cout << "Both are of similar age" << "\n";
+    }
+    else if (person2 > person1)
+    {
+        cout<< "person 2 is older than person 1" <<"\n";
+    }
+    else if (person1 == person2)
+    {
+        cout<< "Both are of similar age" << "\n";
+    }
+    else if (person1 > 100 && person2 > 100)
+    {
+        cout << "You both are of old age" <<"\n";
+    }
+    else
+    {
+        cout <<"not sure what's left..";
+    }
+}
+//181218
+int age1, age2 ;
+
+    cout << "User 1, what is your age?: ";
+    cin >> age1;
+    cout << "User 2, what is your age?: ";
+    cin >> age2 ;
+    bool bool_test = ((age1 >= 100) && (age2 >= 100)) ;
+    cout << age1 <<" " << age2 << '\n';
+    if (bool_test)
+    {
+        cout << "Both users are above 100!" ;
+    }
+    else if (age1 < age2)
+    {
+        cout << "User2 is older!";
+    }
+    else if(age1>age2)
+    {
+        cout << "user1 is older." ;
+    }
+    else
+    {
+        cout << "Both are of similar age." ;
+    }
+-------------------------------------
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+int main ()
+{
+    string username;
+    string password;
+    cout<< "Enter your name: " << "\n";
+    getline( cin, username, '\n');          //GOT TO USE single quotes?? Single quotes are for a single character. Double quotes are for a string (array of characters)
+    cout << "Enter your password: "<< "\n";
+    getline (cin, password, '\n');          //GOT TO USE single quotes??
+
+    if (username == "jonmic" && password == "ossa")
+    {
+        cout << "Access allowed" << "\n";
+    }
+    else if (username == "sanna" && password == "kotte")    //multiple accounts..
+    {
+        cout << "Hey, Sanna! Welcome back." <<"\n";
+    }
+    else if (username == "kira" && password == "kotte")     //multiple accounts..
+    {
+        cout <<"Hey, Kira-biraa!" <<"\n";
+    }
+    else
+    {
+        cout << "Wrong username or password. Please try again or call a friend!" << "\n";
+        //returning is a convenient way to stop the program
+        return 0;
+    }
+}
+-----------------------------------------------------------
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+int main()
+{
+    string password;
+
+    cout << "Please enter the Batman Cave, Batman: " <<"\n";
+    getline( cin, password, '\n');
+    if (password == "wingedDEATH"){
+        cout<< "Access granted. \n \n \n" <<"Welcome, Batman \n\n\n\n";
+        return 0;
+    }
+    else{
+        cout<< "Wrong password, intruder.\n Burn...\n";
+        //returning is a convenient way to stop the program
+        return 0;
+    }//The programs purpose is to help me learn if and else statements with the input from the user.
+    //It's new how he introduced the cin function in a new way.
+    //getline( cin, password, ... gets users input and adds it to the variable password, which we use later to check with if and else statements
+    //the old method was cin >> variable; (accepted integers
+    //so getline is the way for strings.
+}
+---------------------------------------------------------------------------------------------
+
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    int x;
+
+    cout <<"Type the number two ";
+    cin.get();  // This asks for enter, after the first enter, then you can tpye..=??
+    cin >> x;   //Type something
+    cin.ignore(); //Ignores ENTER / doesn't really help, the program acts the same say
+
+    bool is_x_two = x == 2; // This makes a boo variable, which only cares about TRUE or FALSE
+
+    if ( is_x_two ) {  // take some action because x is two!
+        cout << "You pressed two!\n" ;
+    }
+    else if (x == 0){
+        cout<< "you pressed zero :O \n";
+    }
+    else{
+        cout << "You didn't press two :( \n";
+    }
+
+}
+----------------------------------------------------------------------
+int main(){
+    int a;
+
+    a = 4* 6;
+    a = a + 5;
+    if (a > 5)
+        {cout<< a <<"\n";  //body of the if statement (everything that's inside {}
+        cout << 1234/2000;
+        }
+    if (a != 5)
+        cout<< "Yo yo" <<"\n";
+    cin.get();
+}
+---------------------------------------------------------------
+ if (5<10){
+        cout << "five is less than 10\n";
+        cout << "I hope this computer screen doesn't screw up my eyes.\n";
+    int x;
+    x = 200;
+        cout << "This is x " << x <<"\n";
+        }
+--------------------------------------
+int main()
+{
+   int a, b, c, d;
+
+   cout<< "Please enter a number: ";
+   cin>> d;
+   cin.ignore();
+
+   a = 6 * 8;
+   b = 6 + 3;
+   c = a + b;
+   d == a;
+   cout<<"these are the numbers" <<"\n"
+    <<"a: " << a <<"\n"
+    <<"b: " << b <<"\n"
+    <<"c: " << c <<"\n"
+    <<"d: " << d <<"\n";
+   cin.get();
+}
